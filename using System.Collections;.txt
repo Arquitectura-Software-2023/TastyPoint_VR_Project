@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AumentarTamaño : MonoBehaviour
+{
+    public Transform objetoReferencia;
+    public float velocidadEstiramiento = 1.0f;
+
+    void Update ( )
+    {
+        // Mueve el objeto de referencia con la tecla direccional horizontal
+        float movimientoHorizontal = Input.GetAxis("Horizontal");
+        objetoReferencia.Translate( Vector3.right * movimientoHorizontal * velocidadEstiramiento * Time.deltaTime );
+
+        // Aumenta el tamaño en el eje X del objeto actual solo si el movimiento es en la dirección negativa (izquierda)
+        if ( movimientoHorizontal < 0 )
+        {
+            float aumentoX = Mathf.Abs(movimientoHorizontal) * velocidadEstiramiento * Time.deltaTime;
+            transform.localScale += new Vector3( aumentoX, 0, 0 );
+        }
+    }
+}
