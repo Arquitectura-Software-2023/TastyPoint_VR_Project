@@ -1,0 +1,47 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class AudioManager : MonoBehaviour
+{
+    public AudioClip audioClip; // El audio que deseas reproducir al inicio
+    private bool hasPlayedAudio = false;
+
+    void Start ( )
+    {
+        // Verifica si el audio ya se reprodujo antes
+        if ( !PlayerPrefs.HasKey( "AudioPlayed" ) )
+        {
+            PlayerPrefs.SetInt( "AudioPlayed", 0 );
+        }
+
+        int audioPlayed = PlayerPrefs.GetInt("AudioPlayed");
+
+        if ( audioPlayed == 0 )
+        {
+            // El audio no se ha reproducido antes, así que lo reproducimos
+            PlayAudio( );
+            // Marcar que el audio se ha reproducido
+            PlayerPrefs.SetInt( "AudioPlayed", 1 );
+            PlayerPrefs.Save( );
+        }
+    }
+
+    void PlayAudio ( )
+    {
+        // Agrega aquí la lógica para reproducir el audio
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = audioClip;
+        audioSource.Play( );
+    }
+
+    public void ResetAudioFlag ( )
+    {
+        PlayerPrefs.SetInt( "AudioPlayed", 0 );
+        PlayerPrefs.Save( );
+    }
+
+    public void ChangeScene ( string sceneName )
+    {
+        SceneManager.LoadScene( sceneName );
+    }
+}
