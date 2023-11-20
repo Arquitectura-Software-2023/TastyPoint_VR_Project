@@ -1,0 +1,43 @@
+
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Jugador : MonoBehaviour
+{
+
+    private int puntuacion;
+    public Text puntuaciontext;
+
+    void Start ( )
+    {
+        puntuacion = 0;
+       // ActualizarPuntuacionUI( );
+    }
+
+    void Update ( )
+    {
+        // Puedes agregar lógica de actualización adicional aquí si es necesario
+    }
+    public void AgregarPuntos ( int puntos )
+    {
+        puntuacion += puntos;
+        //ActualizarPuntuacionUI( );
+    }
+
+   // void ActualizarPuntuacionUI ( )
+   // {
+     //   puntuaciontext.text = "Puntuación: " + puntuacion;
+    //}
+
+    private void OnCollisionEnter ( Collision collision )
+    {
+        if ( collision.gameObject.CompareTag( "Objeto" ) ) // Asegúrate de que el objeto tenga el tag "Objeto"
+        {
+            Debug.Log( "Hemos detectado colisión" );
+            puntuacion++;
+            puntuaciontext.text = puntuacion.ToString( );
+            Destroy( collision.gameObject ); // Destruye el objeto con el que colisionó
+        }
+    }
+}
+
